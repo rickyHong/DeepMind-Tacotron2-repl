@@ -17,7 +17,7 @@ hparams = tf.contrib.training.HParams(
 	trim_silence = True,
 	# Use LWS (https://github.com/Jonathan-LeRoux/lws) for STFT and phase reconstruction
 	# It's preferred to set True to use with https://github.com/r9y9/wavenet_vocoder
-	use_lws=False,
+	use_lws=True,
 
 	#Mel spectrogram
 	fft_size = 1024,
@@ -28,7 +28,7 @@ hparams = tf.contrib.training.HParams(
 	#Mel and Linear spectrograms normalization/scaling and clipping
 	signal_normalization = True,
 	allow_clipping_in_normalization = True, #Only relevant if mel_normalization = True
-	symmetric_mels = True, #Whether to scale the data to be symmetric around 0
+	symmetric_mels = False, #Whether to scale the data to be symmetric around 0
 	max_abs_value = 4., #max absolute value of data. If symmetric, data will be [-max, max] else [0, max]
 
 	#Limits
@@ -38,7 +38,7 @@ hparams = tf.contrib.training.HParams(
 	fmax = 7600,
 
 	#Griffin Lim
-	power = 1.55,
+	power = 1.1,
 	griffin_lim_iters = 60,
 
 
@@ -86,8 +86,8 @@ hparams = tf.contrib.training.HParams(
 	# **NOTE**: if you change the one of the two parameters below, you need to
 	# re-run preprocessing before training.
 	# **NOTE**: scaler input (raw or mulaw) is experimental. Use it your own risk.
-	input_type="mulaw-quantize",
-	quantize_channels=256,  # 65536 or 256
+	input_type="raw",
+	quantize_channels=65536,  # 65536 or 256
 
 	silence_threshold=2,
 
@@ -98,7 +98,7 @@ hparams = tf.contrib.training.HParams(
 
 
 	#Tacotron Training
-	tacotron_batch_size = 32, #number of training samples on each training steps
+	tacotron_batch_size = 16, #number of training samples on each training steps
 	tacotron_reg_weight = 1e-6, #regularization weight (for l2 regularization)
 	tacotron_scale_regularization = True, #Whether to rescale regularization weight to adapt for outputs range (used when reg_weight is high and biasing the model)
 
